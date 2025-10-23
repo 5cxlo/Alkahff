@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>سورة الكهف</title>
+  <meta name="theme-color" content="#3b7f5a" />
+
+  <style>
+    :root {
+      --bg: #f8f8f4;
+      --fg: #222;
+      --accent: #1a6334;
+      --card: #fff;
+    }
+
+    html[data-theme='dark'] {
+      --bg: #f3e9d2;      /* بيج فاتح للخلفية */
+      --fg: #3e2f1c;      /* بني داكن للنص */
+      --accent: #b6893c;  /* ذهبي فاتح للعناوين والأزرار */
+      --card: #f7f1e1;    /* بيج أفتح قليلاً للمربعات الداخلية */
+    }
+
+    body {
+      margin: 0;
+      background-color: var(--bg);
+      color: var(--fg);
+      font-family: "Scheherazade", "Amiri", serif;
+      line-height: 2.3;
+    }
+
+    header.topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--accent);
+      color: #fff;
+      padding: 10px 16px;
+    }
+
+    header.topbar h1 {
+      font-size: 1.5rem;
+      margin: 0;
+    }
+
+    .btn {
+      background: #fff;
+      color: var(--accent);
+      border: none;
+      border-radius: 8px;
+      padding: 8px 12px;
+      cursor: pointer;
+      font-size: 0.95rem;
+      margin-left: 6px;
+      transition: background .2s ease;
+    }
+
+    .btn:hover { background: #f0f0f0; }
+
+    .bismillah {
+      font-size: 48px;
+      text-align: center;
+      margin: 25px 0;
+      color: var(--accent);
+    }
+
+    .ayahs {
+      font-size: 22px;
+      text-align: justify;
+      text-justify: inter-word;
+      direction: rtl;
+      background: var(--card);
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      margin: 20px auto;
+      width: 90%;
+      max-width: 900px;
+    }
+
+    .ayah { display: inline; white-space: pre-wrap; }
+    .num { color: var(--accent); font-size: 20px; margin: 0 3px; }
+
+    .note {
+      text-align: center;
+      color: var(--accent);
+      margin-top: 20px;
+    }
+
+    footer.footer {
+      text-align: center;
+      padding: 20px;
+      color: var(--accent);
+      border-top: 2px solid var(--accent);
+    }
+
+    .player {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 20px auto;
+      width: 90%;
+      max-width: 900px;
+    }
+
+    audio {
+      width: 100%;
+      margin-top: 10px;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <header class="topbar">
+    <h1>سورة الكهف</h1>
+    <div class="actions">
+      <button id="themeToggle" class="btn">وضع ليلي</button>
+      <button id="playAudio" class="btn">استماع</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="bismillah">﷽</div>
+
+    <div id="ayahContainer" class="ayahs">
+      <div id="ayahContainer" class="ayahs" dir="rtl">
+  <div class="ayah">
+‎    الْحَمْدُ لِلَّهِ الَّذِي أَنْزَلَ عَلَى عَبْدِهِ الْكِتَابَ وَلَمْ يَجْعَلْ لَهُ عِوَجًا
+    <span class="num">﴿1﴾</span>
+  </div>
+
+  <div class="ayah">
+‎    قَيِّمًا لِيُنْذِرَ بَأْسًا شَدِيدًا مِنْ لَدُنْهُ وَيُبَشِّرَ الْمُؤْمِنِينَ الَّذِينَ يَعْمَلُونَ الصَّالِحَاتِ أَنَّ لَهُمْ أَجْرًا حَسَنًا
+    <span class="num">﴿2﴾</span>
+  </div>
+
+  <div class="ayah">
+‎    مَاكِثِينَ فِيهِ أَبَدًا
+    <span class="num">﴿3﴾</span>
+  </div>
+
+  <div class="ayah">
+‎ وَيُنذِرَ ٱلَّذِينَ قَالُواْ ٱتَّخَذَ ٱللَّهُ وَلَدٗا
+    <span class="num">﴿4﴾</span>
+  </div>
+
+</div>
+    </div>
+
+    <div class="player">
+      <audio id="player" controls src="https://server10.mp3quran.net/ajm/128/018.mp3"></audio>
+    </div>
+
+    <p class="note">نسأل الله أن يجعل هذا العمل نورًا بين الجمعتين</p>
+  </main>
+
+  <footer class="footer">جمعة مُباركة والله يكتب أجركم جميعًا</footer>
+
+  <script>
+    // 🌙 الوضع الليلي والفاتح
+    const html = document.documentElement;
+    const themeBtn = document.getElementById('themeToggle');
+    function setTheme(mode) {
+      html.setAttribute('data-theme', mode);
+      themeBtn.textContent = mode === 'dark' ? 'وضع فاتح' : 'وضع ليلي';
+      localStorage.setItem('theme', mode);
+    }
+    const savedTheme = localStorage.getItem('theme') || 
+      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    setTheme(savedTheme);
+    themeBtn.addEventListener('click', () => {
+      setTheme(html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+    });
+
+    // 🎧 تشغيل الصوت
+    const playBtn = document.getElementById('playAudio');
+    const player = document.getElementById('player');
+    playBtn.addEventListener('click', () => {
+      player.play();
+    });
+  </script>
+</body>
+</html>
